@@ -31,7 +31,7 @@ export default defineComponent({
   },
   computed: {
     isEven() {
-      console.log('computed');
+      // console.log('computed');
       return !(this.count % 2);
     },
     styles() {

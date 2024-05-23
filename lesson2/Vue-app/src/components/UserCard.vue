@@ -7,13 +7,13 @@
     <div v-if="user.age < 18">Ребенок</div>
     <div v-else-if="user.age < 60">Молодой</div>
     <div v-else>Пожилой</div>
-    <button @click="emits('sell', user)">Купить</button>
+    <button class="card-button" @click="emits('sell', user)">Купить</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { IUser } from '@/types/users.types';
-import { computed } from 'vue';
+import { computed, onUnmounted } from 'vue';
 
 interface IUserCardProps {
   user: IUser;
@@ -27,6 +27,11 @@ const props = withDefaults(defineProps<IUserCardProps>(), { car: 'AUDI' });
 const emits = defineEmits<IUserCardEmits>();
 
 const ageDays = computed(() => `Возраст в днях: ${props.user.age * 365}`);
+
+onUnmounted(() => {
+  // eslint-disable-next-line no-console
+  console.log('unmounted');
+});
 </script>
 
 <style lang="scss" scoped>

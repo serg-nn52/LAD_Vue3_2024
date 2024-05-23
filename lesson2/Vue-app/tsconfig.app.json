@@ -11,5 +11,8 @@
       "@/*": ["./src/*"]
     },
     "strict": true
+  },
+  "vueCompilerOptions": {
+    "strictTemplates": true
   }
 }
