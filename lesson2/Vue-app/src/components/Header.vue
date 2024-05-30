@@ -1,25 +1,21 @@
 <template>
-  <header v-bind:style="styles" class="header">Header {{ count }}</header>
-  <!-- <HeaderButton
-    @click-me="(value) => listenerButton(value)"
-    :count="count"
-    :button-name="'NewCounter'"
-    @click="incrementCount"
-  /> -->
+  <header v-bind:style="styles" class="header">{{ title }}</header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import Button from './Button.vue';
 
 export default defineComponent({
-  // components: {
-  //   HeaderButton: Button,
-  // },
   data() {
     return {
       count: 0,
     };
+  },
+  props: {
+    title: {
+      required: true,
+      type: String,
+    },
   },
   methods: {
     incrementCount() {

@@ -1,25 +1,10 @@
-<script setup lang="ts">
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
-import Content from './components/Content/Content.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="wrapper">
-    <Header />
-    <Content @sell="(id) => console.log(id)">
-      <template #default>
-        <h1>Our app</h1>
-      </template>
-
-      <template #bottom-slot>
-        <p class="description">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum mollitia quos error. Iste voluptas quisquam
-          fuga? Amet nulla enim eum! Omnis quidem iusto id, nemo nihil labore sunt qui doloremque.
-        </p>
-      </template>
-    </Content>
-    <Footer />
+    <component :is="$route.meta.layout || 'div'">
+      <RouterView />
+    </component>
   </div>
 </template>
 

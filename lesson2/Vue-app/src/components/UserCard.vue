@@ -7,7 +7,7 @@
     <div v-if="user.age < 18">Ребенок</div>
     <div v-else-if="user.age < 60">Молодой</div>
     <div v-else>Пожилой</div>
-    <button class="card-button" @click="emits('sell', user)">Купить</button>
+    <button class="card-button" @click="emits('sell', user)">Подробнее</button>
   </div>
 </template>
 

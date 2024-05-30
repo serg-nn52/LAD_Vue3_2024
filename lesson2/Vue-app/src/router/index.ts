@@ -1,5 +1,7 @@
+import NotFound from '@/components/NotFound.vue';
+import MainLayout from '@/layouts/MainLayout.vue';
+import UserPage from '@/views/UserPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import App from '@/App.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,16 +9,55 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: App,
+      component: () => import('@/views/MainPage.vue'),
+      meta: {
+        layout: MainLayout,
+        breadcrumbs: [{ name: 'main', routeName: 'home' }],
+      },
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
+    {
+      path: '/posts',
+      name: 'posts',
+      component: () => import('@/views/PostPage.vue'),
+      meta: {
+        layout: MainLayout,
+        breadcrumbs: [
+          { name: 'main', routeName: 'home' },
+          { name: 'posts', routeName: 'posts' },
+        ],
+      },
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('@/views/UsersPage.vue'),
+      meta: {
+        layout: MainLayout,
+        breadcrumbs: [
+          { name: 'main', routeName: 'home' },
+          { name: 'users', routeName: 'users' },
+        ],
+      },
+    },
+    {
+      path: '/users/:userId',
+      name: 'user',
+      component: () => import('@/views/UserPage.vue'),
+      meta: {
+        layout: MainLayout,
+        breadcrumbs: [
+          { name: 'main', routeName: 'home' },
+          { name: 'users', routeName: 'users' },
+        ],
+      },
+      children: [
+        {
+          path: 'profile',
+          component: UserPage,
+        },
+      ],
+    },
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
   ],
 });
 
