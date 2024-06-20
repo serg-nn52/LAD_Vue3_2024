@@ -1,40 +1,22 @@
 <template>
   <div class="posts-wrapper">
     <h2>PostVue</h2>
-    <h3 v-if="isLoading">Loading...</h3>
-    <h3 v-for="post in posts" :key="post.id">{{ post.title }}</h3>
+    <h3 v-if="isLoading && !visiblePosts.length">Loading...</h3>
+    <h3 v-for="post in visiblePosts" :key="post.id">{{ post.title }}</h3>
     <h3 v-if="error">{{ error }}</h3>
+    <button @click="postsStore.togglePosts">{{ isShowAll ? 'Показать первые 10 постов' : 'Показать все' }}</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFetch } from '@/composables/useFetch';
+import { usePostsStore } from '@/stores/posts';
+import { storeToRefs } from 'pinia';
 
-import { onMounted } from 'vue';
+const postsStore = usePostsStore();
 
-interface IPost {
-  body: string;
-  id: number;
-  title: string;
-  userId: number;
-}
-const {
-  data: posts,
-  error,
-  isLoading,
-} = useFetch<IPost[]>(
-  'posts',
-  'get',
-  {},
-  {
-    _page: '1',
-    _limit: 25,
-  },
-);
+const { error, isLoading, visiblePosts, isShowAll } = storeToRefs(postsStore);
 
-onMounted(() => {
-  useFetch('posts', 'post', { title: 'foo', body: 'bar', userId: 1 });
-});
+postsStore.fetchPosts();
 </script>
 
 <style lang="scss" scoped>
